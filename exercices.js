@@ -80,12 +80,15 @@ function quandRechercheArtefact(artefact) {
 
 // Le Téléporteur Temporel
 
-function voyagerTemps(destination) {
+function voyagerTemps(destination,callback) {
     setTimeout(() => {
         loader.style.display = 'none'
         localisation.textContent = destination
         localisation.style.display = 'block'
-    },generationNombreAleatoireEntre(1000,3000))
+        if (callback) {
+            callback()
+        }
+    },generationNombreAleatoireEntre(2000,3000))
 }
 
 const localisation = document.querySelector('.localisation_epoque')
@@ -104,10 +107,10 @@ button.addEventListener('click', () => {
 
 // La Collecte d'Artefact Mystère
 
-function collecterArtefact(nomArtefact) {
+function collecterArtefact(nomArtefact,callback) {
     let result = Math.random() * 100
+    let collecte = document.createElement('li')
     setTimeout(() => {
-        let collecte = document.createElement('li')
         if (result<50) {
             collecte.textContent = nomArtefact + ' a bien été collecté'
         }
@@ -115,7 +118,11 @@ function collecterArtefact(nomArtefact) {
             collecte.textContent = nomArtefact + ' n\'a pas pu être collecté'
         }
         historique.appendChild(collecte)
+        if (callback) {
+            callback()
+        }
     },2000)
+    
 }
 
 const historique = document.querySelector('.liste_artefacts')
@@ -125,6 +132,20 @@ const input = document.querySelector('.form-control')
 button2.addEventListener('click', () => {
     const artefact = input.value
     collecterArtefact(artefact)
+})
+
+// La Mission Temporelle Complexe
+
+voyagerTemps("Médievale", () => {
+    collecterArtefact("épée de chevalier",() => {
+        voyagerTemps("Romaine", () => {
+            collecterArtefact("bouclier romain", () => {
+                collecterArtefact("épée romaine", () => {
+                    
+                })
+            })
+        })
+    })
 })
 
 
