@@ -77,3 +77,55 @@ function quandEpoqueChoisie(nomEpoque) {
 function quandRechercheArtefact(artefact) {
   // Utilisation de votre fonction collecterArtefact
 }
+
+// Le Téléporteur Temporel
+
+function voyagerTemps(destination) {
+    setTimeout(() => {
+        loader.style.display = 'none'
+        localisation.textContent = destination
+        localisation.style.display = 'block'
+    },generationNombreAleatoireEntre(1000,3000))
+}
+
+const localisation = document.querySelector('.localisation_epoque')
+localisation.style.display = 'none'
+
+const loader = document.querySelector('.voyage_en_cours')
+loader.style.display = 'block'
+
+const button = document.querySelector('.btn-voyage')
+
+button.addEventListener('click', () => {
+    const select = document.querySelector('.form-select')
+    const epoque = select.options[select.selectedIndex].text
+    voyagerTemps(epoque)
+})
+
+// La Collecte d'Artefact Mystère
+
+function collecterArtefact(nomArtefact) {
+    let result = Math.random() * 100
+    setTimeout(() => {
+        let collecte = document.createElement('li')
+        if (result<50) {
+            collecte.textContent = nomArtefact + ' a bien été collecté'
+        }
+        else {
+            collecte.textContent = nomArtefact + ' n\'a pas pu être collecté'
+        }
+        historique.appendChild(collecte)
+    },2000)
+}
+
+const historique = document.querySelector('.liste_artefacts')
+const button2 = document.querySelector('#btn-voyage')
+const input = document.querySelector('.form-control')
+
+button2.addEventListener('click', () => {
+    const artefact = input.value
+    collecterArtefact(artefact)
+})
+
+
+
